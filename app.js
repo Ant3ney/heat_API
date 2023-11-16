@@ -11,6 +11,9 @@ const playerRouter = require("./routes/player");
 const aiRouter = require("./routes/ai");
 
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("In Heat API!");
+});
 app.use("/user", playerRouter);
 app.use("/ai", aiRouter);
 
