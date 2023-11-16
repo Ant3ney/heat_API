@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 app.use(express.json());
-const port = 6969;
+const port = 10;
 
 const uri =
   "mongodb+srv://afordm99:VAbiGK7nx26VILb3@heatgame.qos8kpx.mongodb.net/?retryWrites=true&w=majority";
