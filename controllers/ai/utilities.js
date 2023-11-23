@@ -83,16 +83,15 @@ function formatSeverity(severity) {
     Running
     Torching
     Backing
-    Uphill Runs
-    Wind Driven Runs
-    Long-range Spotting
+    UphillRuns
+    WindDrivenRuns
     Spotting
-    Isolated Torching
-    Short-range Spotting
-    Short Crown Runs
-    Single Tree Torching
+    IsolatedTorching
+    ShortrangeSpotting
+    ShortCrownRuns
+    SingleTreeTorching
     Crowning
-    Group Torching 
+    GroupTorching 
 */
   switch (severity) {
     case "Backing":
@@ -107,8 +106,6 @@ function formatSeverity(severity) {
       return "[U,p,h,i,l,l, ,R,u,n,s]";
     case "WindDrivenRuns":
       return "[W,i,n,d, ,D,r,i,v,e,n, ,R,u,n,s]";
-    case "LongrangeSpotting":
-      return "[L,o,n,g,-,r,a,n,g,e, ,S,p,o,t,t,i,n,g]";
     case "Spotting":
       return "[S,p,o,t,t,i,n,g]";
     case "IsolatedTorching":
