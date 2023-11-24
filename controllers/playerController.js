@@ -129,8 +129,12 @@ const playerController = {
               message: "Invalid password.",
             });
           }
+          try {
+            req.session.playerId = player._id;
+          } catch (err) {
+            console.log(err);
+          }
 
-          req.session.playerId = player._id;
           console.log(
             "Player logged in successfully! Returning player:",
             email
