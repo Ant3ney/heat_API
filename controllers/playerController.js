@@ -166,9 +166,15 @@ const playerController = {
     });
   },
   updatePlayer(req, res) {
-    const tcgUserData = req.body;
-    if (!tcgUserData)
+    console.log("Attempting to update player");
+    const { tcgUserData } = req.body;
+    if (!tcgUserData) {
+      console.log("No tcgUserData provided...\nFailed to update player");
       return res.status(400).json({ message: "No tcgUserData provided." });
+    }
+
+    console.log("successfully updated player");
+    res.status(200).json({ message: "Player updated successfully" });
   },
   addCardToUnlocked({ params, body }, res) {
     const id = params.id;
