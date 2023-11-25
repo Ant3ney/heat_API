@@ -327,4 +327,20 @@ const playerController = {
   // purchaseCard
 };
 
+function transformTCGUserToPlayerSchema(tcgUser) {
+  const player = {
+    email: tcgUser.email,
+
+    displayName: tcgUser.username,
+    scores: tcgUser.victories,
+    balance: tcgUser.coins,
+    unlockedCards: tcgUser.cards.map((card) => {
+      return { id: card.tid, count: card.quantity };
+    }),
+    equippedHand: [], // Assuming equippedHand needs to be derived or set to a default value
+  };
+
+  return player;
+}
+
 module.exports = playerController;
