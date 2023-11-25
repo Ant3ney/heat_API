@@ -189,7 +189,10 @@ const playerController = {
     let successfullyUpdatedPlayer = null;
 
     try {
-      Player.findOneAndUpdate({ email: player.email }, newPlayer);
+      successfullyUpdatedPlayer = await Player.findOneAndUpdate(
+        { email: player.email },
+        newPlayer
+      );
     } catch (err) {
       console.log(
         "An error has occurred in updating player with new one. Flag 01!"
@@ -201,7 +204,12 @@ const playerController = {
       console.log(
         "An error has occurred in updating player with new one. Flag 02!"
       );
-      return res.status(400).json({ error: err });
+      return res.status(400).json({
+        error: {
+          message:
+            "An error has occurred in updating player with new one. Flag 02!",
+        },
+      });
     }
 
     console.log("successfully updated player");
