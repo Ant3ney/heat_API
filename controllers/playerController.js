@@ -376,7 +376,7 @@ function transformTCGUserToPlayerSchema(tcgUser, passwordHash) {
 // Will get player document object from request that has
 // Email and password in body
 async function getPlayerOfRequest(req) {
-  const { email, password, username, id } = req.body.tcgUser || req.body;
+  const { email, password, username, id } = req.body.tcgUserData || req.body;
   const effectiveEmail = email || username || id;
   if (!effectiveEmail || !password)
     return console.log("No email or password provided in request body");
