@@ -359,7 +359,7 @@ const playerController = {
 
 function transformTCGUserToPlayerSchema(tcgUser, passwordHash) {
   const player = {
-    email: tcgUser.email,
+    email: tcgUser.email || tcgUser.username || tcgUser.id,
     password: passwordHash,
     displayName: tcgUser.username,
     scores: parseInt(tcgUser.victories),
