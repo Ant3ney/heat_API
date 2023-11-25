@@ -165,13 +165,42 @@ const playerController = {
         .json({ message: "Player logged out successfully" });
     });
   },
-  updatePlayer(req, res) {
+  async updatePlayer(req, res) {
     console.log("Attempting to update player");
     const { tcgUserData } = req.body;
-    console.log(tcgUserData);
+
     if (!tcgUserData) {
       console.log("No tcgUserData provided...\nFailed to update player");
       return res.status(400).json({ message: "No tcgUserData provided." });
+    }
+
+    const player = await getPlayerOfRequest(req);
+    if (!player) {
+      console.log("No player found in request");
+      return res.status(400).json({ message: "No player found in request" });
+    }
+
+    const newPlayer = transformTCGUserToPlayerSchema(
+      tcgUserData,
+      player.password
+    ).then();
+
+    let successfullyUpdatedPlayer = null;
+
+    try {
+      Player.findOneAndUpdate({ email: player.email }, newPlayer);
+    } catch (err) {
+      console.log(
+        "An error has occurred in updating player with new one. Flag 01!"
+      );
+      return res.status(400).json({ error: err });
+    }
+
+    if (!successfullyUpdatedPlayer) {
+      console.log(
+        "An error has occurred in updating player with new one. Flag 02!"
+      );
+      return res.status(400).json({ error: err });
     }
 
     console.log("successfully updated player");
@@ -327,20 +356,52 @@ const playerController = {
   // purchaseCard
 };
 
-function transformTCGUserToPlayerSchema(tcgUser) {
+function transformTCGUserToPlayerSchema(tcgUser, passwordHash) {
   const player = {
     email: tcgUser.email,
-
+    password: passwordHash,
     displayName: tcgUser.username,
-    scores: tcgUser.victories,
+    scores: parseInt(tcgUser.victories),
     balance: tcgUser.coins,
-    unlockedCards: tcgUser.cards.map((card) => {
-      return { id: card.tid, count: card.quantity };
-    }),
-    equippedHand: [], // Assuming equippedHand needs to be derived or set to a default value
+    unlockedCards: card,
+    equippedHand: tcgUser.hand,
+    packs: tcgUser.packs,
+    decks: tcgUser.decks,
   };
 
   return player;
+}
+
+// Will get player document object from request that has
+// Email and password in body
+async function getPlayerOfRequest(req) {
+  const { email, password } = req.body;
+  if (!email || !password)
+    return console.log("No email or password provided in request body");
+
+  let playerObj = null;
+  try {
+    playerObj = await Player.findOne({ email }).select("-__v").then();
+  } catch (err) {
+    console.log("Error when trying to find player by email");
+    return null;
+  }
+
+  if (!playerObj) return console.log("No player found with email", email);
+
+  // Compare provided password with the one in the database
+  let isMatch = null;
+  try {
+    isMatch = await bcrypt.compare(password, playerObj.password).then();
+  } catch (err) {
+    console.log("Error when comparing passwords");
+    return null;
+  }
+
+  if (!isMatch)
+    return console.log("Invalid password provided for user:", email);
+
+  return playerObj;
 }
 
 module.exports = playerController;

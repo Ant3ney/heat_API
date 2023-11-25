@@ -43,7 +43,6 @@ const PlayerSchema = new Schema({
       { id: "5", count: 5 },
     ],
   },
-  hand: String,
   equippedHand: String,
   packs: [
     {
