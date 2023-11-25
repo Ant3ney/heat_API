@@ -184,7 +184,7 @@ const playerController = {
     const newPlayer = transformTCGUserToPlayerSchema(
       tcgUserData,
       player.password
-    ).then();
+    );
 
     let successfullyUpdatedPlayer = null;
 
