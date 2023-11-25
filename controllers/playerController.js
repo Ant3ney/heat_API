@@ -165,6 +165,11 @@ const playerController = {
         .json({ message: "Player logged out successfully" });
     });
   },
+  updatePlayer(req, res) {
+    const tcgUserData = req.body;
+    if (!tcgUserData)
+      return res.status(400).json({ message: "No tcgUserData provided." });
+  },
   addCardToUnlocked({ params, body }, res) {
     const id = params.id;
     Player.findById(id)
