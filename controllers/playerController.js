@@ -168,6 +168,7 @@ const playerController = {
   updatePlayer(req, res) {
     console.log("Attempting to update player");
     const { tcgUserData } = req.body;
+    console.log(tcgUserData);
     if (!tcgUserData) {
       console.log("No tcgUserData provided...\nFailed to update player");
       return res.status(400).json({ message: "No tcgUserData provided." });
