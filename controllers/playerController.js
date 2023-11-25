@@ -364,7 +364,7 @@ function transformTCGUserToPlayerSchema(tcgUser, passwordHash) {
     displayName: tcgUser.username,
     scores: parseInt(tcgUser.victories),
     balance: tcgUser.coins,
-    unlockedCards: card,
+    unlockedCards: tcgUser.cards,
     equippedHand: tcgUser.hand,
     packs: tcgUser.packs,
     decks: tcgUser.decks,
