@@ -376,19 +376,23 @@ function transformTCGUserToPlayerSchema(tcgUser, passwordHash) {
 // Will get player document object from request that has
 // Email and password in body
 async function getPlayerOfRequest(req) {
-  const { email, password } = req.body;
-  if (!email || !password)
+  const { email, password, username, id } = req.body;
+  const effectiveEmail = email || username || id;
+  if (!effectiveEmail || !password)
     return console.log("No email or password provided in request body");
 
   let playerObj = null;
   try {
-    playerObj = await Player.findOne({ email }).select("-__v").then();
+    playerObj = await Player.findOne({ email: effectiveEmail })
+      .select("-__v")
+      .then();
   } catch (err) {
     console.log("Error when trying to find player by email");
     return null;
   }
 
-  if (!playerObj) return console.log("No player found with email", email);
+  if (!playerObj)
+    return console.log("No player found with email", effectiveEmail);
 
   // Compare provided password with the one in the database
   let isMatch = null;
@@ -400,7 +404,7 @@ async function getPlayerOfRequest(req) {
   }
 
   if (!isMatch)
-    return console.log("Invalid password provided for user:", email);
+    return console.log("Invalid password provided for user:", effectiveEmail);
 
   return playerObj;
 }
