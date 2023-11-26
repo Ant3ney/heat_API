@@ -214,12 +214,10 @@ const playerController = {
     }
 
     console.log("successfully updated player");
-    res
-      .status(200)
-      .json({
-        message: "Player updated successfully",
-        player: successfullyUpdatedPlayer,
-      });
+    res.status(200).json({
+      message: "Player updated successfully",
+      player: newPlayer,
+    });
   },
   addCardToUnlocked({ params, body }, res) {
     const id = params.id;
