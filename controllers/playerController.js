@@ -213,7 +213,7 @@ const playerController = {
       });
     }
 
-    console.log("successfully updated player");
+    console.log("successfully updated player to", newPlayer);
     res.status(200).json({
       message: "Player updated successfully",
       player: newPlayer,
