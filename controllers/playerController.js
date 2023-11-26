@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const playerController = {
   createPlayer({ body }, res) {
-    console.log("Attempting to create new player: ", body.email);
+    console.log('Attempting to create new player:"' + body.email + '"');
     const { password, ...otherBodyProps } = body;
     bcrypt.hash(password, 10, (err, hashedPassword) => {
       if (err) {
