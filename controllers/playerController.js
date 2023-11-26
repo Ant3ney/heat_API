@@ -194,6 +194,7 @@ const playerController = {
         { email: player.email },
         newPlayer
       );
+      console.log("successfullyUpdatedPlayer: ", successfullyUpdatedPlayer);
     } catch (err) {
       console.log(
         "An error has occurred in updating player with new one. Flag 01!"
