@@ -105,6 +105,7 @@ const playerController = {
     const { email, password } = req.body;
     console.log(`Attempting to log in player '${email}'`);
     Player.findOne({ email })
+      .select("-__v")
       .then((player) => {
         if (!player) {
           console.log(`No player exists with the email '${email}'.`);
@@ -137,7 +138,7 @@ const playerController = {
 
           console.log(
             "Player logged in successfully! Returning player:",
-            email
+            player
           );
           return res.status(200).json({
             message: `Player '${player.playername}' logged in successfully`,
