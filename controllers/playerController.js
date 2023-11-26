@@ -376,6 +376,7 @@ function transformTCGUserToPlayerSchema(tcgUser, passwordHash) {
     equippedHand: tcgUser.hand,
     packs: tcgUser.packs,
     decks: tcgUser.decks,
+    rewards: tcgUser.rewards,
   };
 
   return player;
