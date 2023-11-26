@@ -130,11 +130,11 @@ const playerController = {
               message: "Invalid password.",
             });
           }
-          try {
+          /* try {
             req.session.playerId = player._id;
           } catch (err) {
             console.log(err);
-          }
+          } */
 
           console.log(
             "Player logged in successfully! Returning player:",
