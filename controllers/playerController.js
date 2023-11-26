@@ -17,7 +17,7 @@ const playerController = {
 
       Player.create({ ...otherBodyProps, password: hashedPassword })
         .then((newPlayer) => {
-          console.log("Player created successfully");
+          console.log("Player created successfully:", newPlayer);
           return res.status(200).json({
             message: `Player '${body.playername}' created successfully`,
             player: newPlayer,
