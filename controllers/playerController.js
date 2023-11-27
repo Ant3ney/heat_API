@@ -17,7 +17,7 @@ const playerController = {
 
       Player.create({ ...otherBodyProps, password: hashedPassword })
         .then((newPlayer) => {
-          console.log("Player created successfully:", newPlayer);
+          console.log("Player created successfully:");
           return res.status(200).json({
             message: `Player '${body.playername}' created successfully`,
             player: newPlayer,
@@ -48,11 +48,17 @@ const playerController = {
       });
   },
   findAllPlayers({ body }, res) {
+    console.log("Attempting to find all players");
     Player.find()
       .then((foundPlayers) => {
-        return res.status(200).json({ players: foundPlayers });
+        console.log("Num Players found:", foundPlayers.length);
+        return res.status(200).json(foundPlayers);
       })
       .catch((err) => {
+        console.error(
+          "An error has occurred when trying to find all players.",
+          err
+        );
         return res.status(500).json({
           message: "There was an error when trying to find all players",
           error: err,
@@ -136,10 +142,7 @@ const playerController = {
             console.log(err);
           } */
 
-          console.log(
-            "Player logged in successfully! Returning player:",
-            player
-          );
+          console.log("Player logged in successfully!");
           return res.status(200).json({
             message: `Player '${player.playername}' logged in successfully`,
             player: { ...player.toObject(), password: undefined },
